@@ -44,6 +44,9 @@ async function parsePayloadOperation(collection, sender, action, eventAction, tx
       insertTx.roundHash = payloadObj.roundHash;
       insertTx.witness = sender;
       for (const signature of payloadObj.signatures) {
+        if (signature[0] === sender) {
+          continue;
+        }
         const fromTx = {
           ...insertTx,
         };
@@ -70,13 +73,16 @@ async function parseWitnessApprovalsExpired(collection, sender, tx, action, even
   insertTx.approvalWeight = events[0].data.approvalWeight;
   for (const expiration of events) {
     const witness = expiration.data.to;
+    if (witness === sender) {
+      continue;
+    }
     witnesses.push(witness);
     insertTx.to = witness;
     await insertHistoryForAccounts(collection, insertTx, [witness]);
   }
   insertTx.to = witnesses;
 
-  await insertHistoryForAccounts(collection, insertTx, [sender]);
+  await insertHistoryForAccounts(collection, insertTx, [insertTx.from]);
 }
 
 async function parseWitnessEvents(collection, sender, tx, action, events) {
