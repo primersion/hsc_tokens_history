@@ -59,11 +59,17 @@ const TokensContract = {
 };
 
 const WitnessesContract = {
-  PROPOSE_ROUND: 'proposeRound',
   REGISTER: 'register',
+  PROPOSE_ROUND: 'proposeRound',
   APPROVE: 'approve',
   DISAPPROVE: 'disapprove',
   SCHEDULE_WITNESSES: 'scheduleWitnesses',
+  WITNESS_APPROVAL_ADDED: 'witnessApprovalAdded',
+  WITNESS_APPROVAL_REMOVED: 'witnessApprovalRemoved',
+  NEW_SCHEDULE: 'newSchedule',
+  CURRENT_WITNESS_CHANGED: 'currentWitnessChanged',
+  AWAITING_ROUND_END: 'awaitingRoundEnd',
+  APPROVALS_EXPIRED: 'approvalsExpired',
 };
 
 const HivePeggedContract = {
