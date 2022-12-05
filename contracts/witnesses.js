@@ -42,6 +42,14 @@ async function parsePayloadOperation(collection, sender, action, eventAction, tx
     case WitnessesContract.PROPOSE_ROUND:
       insertTx.round = payloadObj.round;
       insertTx.roundHash = payloadObj.roundHash;
+      insertTx.witness = sender;
+      for (const signature of payloadObj.signatures) {
+        const fromTx = {
+          ...insertTx,
+        };
+        fromTx.signature = signature;
+        await insertHistoryForAccounts(collection, fromTx, [signature[0]]);
+      }
       insertTx.signatures = payloadObj.signatures;
       break;
     default:
